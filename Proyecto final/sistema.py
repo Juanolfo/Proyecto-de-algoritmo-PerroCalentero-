@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 import json
 import requests
 import os

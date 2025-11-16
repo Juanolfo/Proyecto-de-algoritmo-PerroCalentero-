@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from typing import List
 from menu import Menu
 from inventario import Inventario

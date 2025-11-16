@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from typing import List, Optional
 from hotdogs import HotDog
 from ingredientes import Ingrediente

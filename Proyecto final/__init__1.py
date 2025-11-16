@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from gestor_ingredientes import GestorIngredientes
 from gestor_inventario import GestorInventario
 from gestor_menu import GestorMenu

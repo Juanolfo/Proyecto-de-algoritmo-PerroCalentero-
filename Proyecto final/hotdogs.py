@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from dataclasses import dataclass
 from typing import List, Optional
 from ingredientes import Ingrediente

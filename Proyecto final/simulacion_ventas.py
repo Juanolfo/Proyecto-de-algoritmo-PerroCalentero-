@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 import random
 from typing import Optional, Dict
 from menu import Menu

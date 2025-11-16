@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from enum import Enum
 from dataclasses import dataclass
 

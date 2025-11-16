@@ -1,3 +1,5 @@
+#ALUMNOS Juan Blanco y Samuel Araujo
+
 from typing import Dict, List
 from ingredientes import Ingrediente, CategoriaIngrediente
 
