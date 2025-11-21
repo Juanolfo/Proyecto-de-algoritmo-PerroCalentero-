@@ -16,7 +16,7 @@ class GestorMenu:
     def ver_lista_hotdogs(self):
         print("\n=== MENÚ DE HOT DOGS ===")
         for i, hotdog in enumerate(self.menu.listar_hotdogs(), 1):
-            disponible = "✓" if hotdog.verificar_inventario(self.inventario) else "✗"
+            disponible = "V" if hotdog.verificar_inventario(self.inventario) else "F"
             print(f"{i}. {hotdog.nombre} - ${hotdog.precio_venta:.2f} [{disponible}]")
     
     def verificar_inventario_para_hotdog(self, hotdog: HotDog) -> bool:
@@ -33,7 +33,7 @@ class GestorMenu:
         
         # Verificar pan
         existencia_pan = self.inventario.verificar_existencia(hotdog.pan)
-        estado_pan = "✅ SUFICIENTE" if existencia_pan >= 1 else "❌ INSUFICIENTE"
+        estado_pan = " SUFICIENTE" if existencia_pan >= 1 else " INSUFICIENTE"
         print(f" PAN: {hotdog.pan.nombre} ({hotdog.pan.tipo})")
         print(f"   Costo: ${hotdog.pan.costo:.2f}")
         print(f"   Cantidad necesaria: 1 unidad")
@@ -43,7 +43,7 @@ class GestorMenu:
         
         # Verificar salchicha
         existencia_salchicha = self.inventario.verificar_existencia(hotdog.salchicha)
-        estado_salchicha = "✅ SUFICIENTE" if existencia_salchicha >= 1 else "❌ INSUFICIENTE"
+        estado_salchicha = " SUFICIENTE" if existencia_salchicha >= 1 else " INSUFICIENTE"
         print(f" SALCHICHA: {hotdog.salchicha.nombre} ({hotdog.salchicha.tipo})")
         print(f"   Costo: ${hotdog.salchicha.costo:.2f}")
         print(f"   Cantidad necesaria: 1 unidad")
@@ -56,7 +56,7 @@ class GestorMenu:
             print(f" TOPPINGS ({len(hotdog.toppings)}):")
             for i, topping in enumerate(hotdog.toppings, 1):
                 existencia_topping = self.inventario.verificar_existencia(topping)
-                estado_topping = "✅ SUFICIENTE" if existencia_topping >= 1 else "❌ INSUFICIENTE"
+                estado_topping = " SUFICIENTE" if existencia_topping >= 1 else " INSUFICIENTE"
                 print(f"   {i}. {topping.nombre} ({topping.tipo})")
                 print(f"      Costo: ${topping.costo:.2f}")
                 print(f"      Cantidad necesaria: 1 unidad")
@@ -71,7 +71,7 @@ class GestorMenu:
             print(f" SALSAS ({len(hotdog.salsas)}):")
             for i, salsa in enumerate(hotdog.salsas, 1):
                 existencia_salsa = self.inventario.verificar_existencia(salsa)
-                estado_salsa = "✅ SUFICIENTE" if existencia_salsa >= 1 else "❌ INSUFICIENTE"
+                estado_salsa = " SUFICIENTE" if existencia_salsa >= 1 else " INSUFICIENTE"
                 print(f"   {i}. {salsa.nombre} ({salsa.tipo})")
                 print(f"      Costo: ${salsa.costo:.2f}")
                 print(f"      Cantidad necesaria: 1 unidad")
@@ -84,7 +84,7 @@ class GestorMenu:
         # Verificar acompañante
         if hotdog.acompanante:
             existencia_acompanante = self.inventario.verificar_existencia(hotdog.acompanante)
-            estado_acompanante = "✅ SUFICIENTE" if existencia_acompanante >= 1 else "❌ INSUFICIENTE"
+            estado_acompanante = " SUFICIENTE" if existencia_acompanante >= 1 else " INSUFICIENTE"
             print(f" ACOMPAÑANTE: {hotdog.acompanante.nombre} ({hotdog.acompanante.tipo})")
             print(f"   Costo: ${hotdog.acompanante.costo:.2f}")
             print(f"   Cantidad necesaria: 1 unidad")
@@ -96,14 +96,14 @@ class GestorMenu:
         
         # Resumen general
         disponible = self.verificar_inventario_para_hotdog(hotdog)
-        estado_general = "✅ DISPONIBLE" if disponible else "❌ NO DISPONIBLE"
+        estado_general = " DISPONIBLE" if disponible else " NO DISPONIBLE"
         print("=" * 60)
         print(f"ESTADO GENERAL DEL HOT DOG: {estado_general}")
         
         if disponible:
             print(" Este hot dog puede ser preparado con el inventario actual")
         else:
-            print("⚠️  Este hot dog NO puede ser preparado por falta de ingredientes")
+            print("  Este hot dog NO puede ser preparado por falta de ingredientes")
         
         return disponible
     

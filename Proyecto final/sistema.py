@@ -75,14 +75,14 @@ class SistemaHotDog:
             response = requests.get(urls["ingredientes"])
             if response.status_code == 200:
                 datos_originales = response.json()
-                print(f"   ✅ Datos crudos recibidos: {len(datos_originales)} categorías")
+                print(f"    Datos crudos recibidos: {len(datos_originales)} categorías")
                 
                 # Convertir estructura anidada a lista plana de ingredientes
                 ingredientes_convertidos = self._convertir_estructura_ingredientes(datos_originales)
-                print(f"   🔄 Convertidos a {len(ingredientes_convertidos)} ingredientes individuales")
+                print(f"    Convertidos a {len(ingredientes_convertidos)} ingredientes individuales")
                 
                 self.gestor_ingredientes.cargar_desde_lista(ingredientes_convertidos)
-                print(f"   ✅ Cargados {len(self.gestor_ingredientes.ingredientes)} ingredientes en el sistema")
+                print(f"    Cargados {len(self.gestor_ingredientes.ingredientes)} ingredientes en el sistema")
                 
                 # Mostrar resumen por categoría
                 print("    Resumen por categoría:")
@@ -91,20 +91,20 @@ class SistemaHotDog:
                     print(f"      {categoria.value}: {len(ingredientes_cat)}")
                     
             else:
-                print(f"   ❌ Error HTTP {response.status_code} al cargar ingredientes")
+                print(f"    Error HTTP {response.status_code} al cargar ingredientes")
                 return False
             
             # Inicializar inventario con cantidades por defecto
             print("\n Inicializando inventario...")
             self._inicializar_inventario_por_defecto()
-            print(f"   ✅ Inventario inicializado con {len(self.inventario.existencias)} items")
+            print(f"    Inventario inicializado con {len(self.inventario.existencias)} items")
             
             # Cargar y convertir menú
             print("\n Cargando menú...")
             response = requests.get(urls["menu"])
             if response.status_code == 200:
                 datos_originales = response.json()
-                print(f"   ✅ Datos crudos recibidos: {len(datos_originales)} hot dogs")
+                print(f"    Datos crudos recibidos: {len(datos_originales)} hot dogs")
                 
                 # Convertir estructura del menú
                 menu_convertido = self._convertir_estructura_menu(datos_originales)
@@ -119,22 +119,22 @@ class SistemaHotDog:
                             hotdogs_cargados += 1
                             print(f"    Hot dog cargado: {hd_data['nombre']}")
                         else:
-                            print(f"   ❌ No se pudo crear hot dog: {hd_data['nombre']}")
+                            print(f"    No se pudo crear hot dog: {hd_data['nombre']}")
                     except Exception as e:
-                        print(f"   ❌ Error al cargar hot dog {hd_data.get('nombre', 'desconocido')}: {e}")
+                        print(f"    Error al cargar hot dog {hd_data.get('nombre', 'desconocido')}: {e}")
                         continue
                 
-                print(f"   ✅ Cargado menú con {hotdogs_cargados} hot dogs")
+                print(f"    Cargado menú con {hotdogs_cargados} hot dogs")
             else:
-                print(f"   ❌ Error HTTP {response.status_code} al cargar menú")
+                print(f"    Error HTTP {response.status_code} al cargar menú")
                 return False
             
             print("\n DATOS CARGADOS EXITOSAMENTE DESDE LA API")
             return True
             
         except Exception as e:
-            print(f"❌ ERROR GENERAL al cargar datos desde la API: {e}")
-            print("🔄 Intentando cargar datos de respaldo...")
+            print(f" ERROR GENERAL al cargar datos desde la API: {e}")
+            print(" Intentando cargar datos de respaldo...")
             return self._cargar_datos_respaldo()
 
     def _convertir_estructura_ingredientes(self, datos_originales):
@@ -257,10 +257,10 @@ class SistemaHotDog:
             salchicha = self.gestor_ingredientes.buscar_por_nombre(salchicha_nombre)
             
             if not pan:
-                print(f"   ⚠️  Pan no encontrado: '{pan_nombre}'")
+                print(f"     Pan no encontrado: '{pan_nombre}'")
                 return None
             if not salchicha:
-                print(f"   ⚠️  Salchicha no encontrada: '{salchicha_nombre}'")
+                print(f"     Salchicha no encontrada: '{salchicha_nombre}'")
                 return None
             
             # Buscar toppings
@@ -270,7 +270,7 @@ class SistemaHotDog:
                 if topping:
                     toppings.append(topping)
                 else:
-                    print(f"   ⚠️  Topping no encontrado: '{topping_nombre}'")
+                    print(f"     Topping no encontrado: '{topping_nombre}'")
             
             # Buscar salsas
             salsas = []
@@ -279,14 +279,14 @@ class SistemaHotDog:
                 if salsa:
                     salsas.append(salsa)
                 else:
-                    print(f"   ⚠️  Salsa no encontrada: '{salsa_nombre}'")
+                    print(f"     Salsa no encontrada: '{salsa_nombre}'")
             
             # Buscar acompañante
             acompanante = None
             if datos_hotdog["acompanante"]:
                 acompanante = self.gestor_ingredientes.buscar_por_nombre(datos_hotdog["acompanante"])
                 if not acompanante:
-                    print(f"   ⚠️  Acompañante no encontrado: '{datos_hotdog['acompanante']}'")
+                    print(f"     Acompañante no encontrado: '{datos_hotdog['acompanante']}'")
             
             # Crear hot dog
             hotdog = HotDog(
@@ -303,7 +303,7 @@ class SistemaHotDog:
             return hotdog
             
         except Exception as e:
-            print(f"   ❌ ERROR creando hot dog '{datos_hotdog.get('nombre', 'Sin nombre')}': {e}")
+            print(f"    ERROR creando hot dog '{datos_hotdog.get('nombre', 'Sin nombre')}': {e}")
             return None
 
     def _cargar_datos_respaldo(self):
@@ -314,16 +314,16 @@ class SistemaHotDog:
                 with open(archivo_respaldo, 'r', encoding='utf-8') as f:
                     datos = json.load(f)
                 
-                print("✅ Cargando datos de respaldo...")
+                print(" Cargando datos de respaldo...")
                 
                 # Cargar ingredientes
                 if 'ingredientes' in datos:
                     self.gestor_ingredientes.cargar_desde_lista(datos['ingredientes'])
-                    print(f"✅ Cargados {len(datos['ingredientes'])} ingredientes de respaldo")
+                    print(f" Cargados {len(datos['ingredientes'])} ingredientes de respaldo")
                 
                 # Inicializar inventario
                 self._inicializar_inventario_por_defecto()
-                print(f"✅ Inventario inicializado con {len(self.inventario.existencias)} items")
+                print(f" Inventario inicializado con {len(self.inventario.existencias)} items")
                 
                 # Cargar menú
                 if 'menu' in datos:
@@ -335,16 +335,16 @@ class SistemaHotDog:
                         except Exception as e:
                             print(f"Error al cargar hot dog de respaldo: {e}")
                             continue
-                    print(f"✅ Cargado menú de respaldo con {len(datos['menu'])} hot dogs")
+                    print(f" Cargado menú de respaldo con {len(datos['menu'])} hot dogs")
                 
                 print(" Datos de respaldo cargados exitosamente")
                 return True
             else:
-                print("❌ No se encontró archivo de respaldo")
+                print(" No se encontró archivo de respaldo")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error al cargar datos de respaldo: {e}")
+            print(f" Error al cargar datos de respaldo: {e}")
             return False
 
     def cargar_datos_locales(self):
@@ -441,7 +441,7 @@ class SistemaHotDog:
         print(f"   Hot dogs en menú: {len(self.menu.hotdogs)}")
         print(f"   Items en inventario: {len(self.inventario.existencias)}")
         
-        print(f"\n🔍 INGREDIENTES POR CATEGORÍA:")
+        print(f"\n INGREDIENTES POR CATEGORÍA:")
         for categoria in CategoriaIngrediente:
             ingredientes = self.gestor_ingredientes.listar_por_categoria(categoria)
             print(f"   {categoria.value}: {len(ingredientes)}")
@@ -451,7 +451,7 @@ class SistemaHotDog:
         
         print(f"\n HOT DOGS EN MENÚ:")
         for i, hotdog in enumerate(self.menu.hotdogs[:5]):  # Mostrar primeros 5
-            disponible = "✅" if hotdog.verificar_inventario(self.inventario) else "❌"
+            disponible = "V" if hotdog.verificar_inventario(self.inventario) else "F"
             print(f"   {i+1}. {hotdog.nombre} - ${hotdog.precio_venta:.2f} {disponible}")
             print(f"      Pan: {hotdog.pan.nombre}")
             print(f"      Salchicha: {hotdog.salchicha.nombre}")
@@ -668,14 +668,14 @@ class SistemaHotDog:
     def ejecutar(self):
         print("Iniciando sistema Hot Dog CCS...")
         
-        # === DIAGNÓSTICO TEMPORAL - EJECUTAR PRIMERO ===
+        #  DIAGNÓSTICO TEMPORAL 
         print("\n" + "="*60)
         print("          DIAGNÓSTICO TEMPORAL - ESTRUCTURA DE DATOS")
         print("="*60)
         self.diagnosticar_estructura_datos()
         print("="*60)
         input("Presiona Enter para continuar con la carga normal de datos...")
-        # === FIN DIAGNÓSTICO TEMPORAL ===
+        #  FIN DIAGNÓSTICO TEMPORAL 
         
         # Cargar datos
         if not self.cargar_datos_desde_api():

@@ -32,7 +32,7 @@ class GestorInventario:
                     ingrediente = self.gestor_ingredientes.buscar_por_nombre(nombre)
                     tipo_info = f" - {ingrediente.tipo}" if ingrediente else ""
                     costo_info = f" - ${ingrediente.costo:.2f}" if ingrediente and ingrediente.costo > 0 else ""
-                    estado = "✅ " if cantidad > 0 else " "
+                    estado = "V" if cantidad > 0 else "F"
                     print(f"  {estado}{nombre}{tipo_info}{costo_info}: {cantidad} unidades")
             else:
                 print("  No hay productos en esta categoría")
@@ -45,7 +45,7 @@ class GestorInventario:
         ingrediente = self.gestor_ingredientes.buscar_por_nombre(nombre_ingrediente)
         if ingrediente:  
             cantidad = self.inventario.verificar_existencia(ingrediente)
-            print(f"\n🔍 Información de '{nombre_ingrediente}':")  
+            print(f"\n Información de '{nombre_ingrediente}':")  
             print(f"   Categoría: {ingrediente.categoria.value}")  
             print(f"   Tipo: {ingrediente.tipo}")
             print(f"   ID: {ingrediente.id}")
@@ -68,7 +68,7 @@ class GestorInventario:
                 ingrediente = self.gestor_ingredientes.buscar_por_nombre(nombre)
                 tipo_info = f" ({ingrediente.tipo})" if ingrediente else ""
                 costo_info = f" - ${ingrediente.costo:.2f}" if ingrediente and ingrediente.costo > 0 else ""
-                estado = "✅ " if cantidad > 10 else "⚠️ " if cantidad > 0 else "❌ "
+                estado = "V " if cantidad > 10 else "C " if cantidad > 0 else "F "
                 print(f"  {estado}{nombre}{tipo_info}{costo_info}: {cantidad} unidades")
             
             print(f"\nTotal: {len(existencias)} productos, {total_cantidad} unidades")
@@ -80,11 +80,11 @@ class GestorInventario:
         if ingrediente:
             cantidad_anterior = self.inventario.verificar_existencia(ingrediente)
             self.inventario.actualizar_existencia(ingrediente, nueva_cantidad)
-            print(f"✅ Existencia de '{ingrediente.nombre}' actualizada:")
+            print(f" Existencia de '{ingrediente.nombre}' actualizada:")
             print(f"   Anterior: {cantidad_anterior} unidades")
             print(f"   Nueva: {nueva_cantidad} unidades")
             print(f"   Diferencia: {nueva_cantidad - cantidad_anterior:+d} unidades")
             return True
         else:
-            print(f"❌ Ingrediente '{nombre_ingrediente}' no encontrado.")
+            print(f" Ingrediente '{nombre_ingrediente}' no encontrado.")
             return False
